@@ -234,8 +234,10 @@ class Tar2018Dataset(datasets.GeneratorBasedBuilder):
             review_name = str(example["Review"])
             title = str(example["Title"])
             abstract = str(example["Abstract"])
-            print(example["Label"], str(example["PMID"]))
-            label = int(example["Label"])  # fixme soem labels are NaN
+            label = example["Label"]
+            if pd.isna(label):
+                continue
+            label = int(label)
             pmid = str(example["PMID"])
             uid += 1
             text = f"{title}\n\n{abstract}"
@@ -248,7 +250,6 @@ class Tar2018Dataset(datasets.GeneratorBasedBuilder):
                     "abstract": abstract,
                     "label": label,
                 }
-                print(data)
                 yield str(uid), data
 
             elif self.config.schema == "bigbio_text":

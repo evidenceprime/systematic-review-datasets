@@ -221,6 +221,9 @@ class Tar2017Dataset(datasets.GeneratorBasedBuilder):
             title = example["Title"]
             abstract = example["Abstract"]
             label = example["Label"]
+            if pd.isna(label):
+                continue
+            label = int(label)
             pmid = str(example["PMID"])
             uid += 1
             text = f"{title}\n\n{abstract}"

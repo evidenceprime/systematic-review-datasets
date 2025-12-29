@@ -369,6 +369,9 @@ class Sigir2017Dataset(datasets.GeneratorBasedBuilder):
             title = example["Title"]
             abstract = example["Abstract"]
             label = example["Label"]
+            if pd.isna(label):
+                continue
+            label = int(label)
             try:
                 pmid = str(example["PMID"])
             except:
